@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+    tigergraph:
+        image: niddudami/tigergraph:3.1.0
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        ulimits:
+            nofile:
+                soft: 1000000
+                hard: 1000000
+        stdin_open: true
+        tty: true
+        cap_add: 
+            - NET_ADMIN
+        networks:
+            - tgnet
+
+networks:
+    tgnet:
+        name: tgclusternet
+        driver: bridge
+        ipam:
+            driver: default
+            config: 
+              - subnet: 172.11.0.0/24
+
